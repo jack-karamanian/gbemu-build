@@ -2,9 +2,8 @@ name: C/C++ CI
 
 on: [push]
 
-envs:
-  matrix:
-    os: [windows-latest, ubuntu-latest, macos-latest]
+matrix:
+  os: [windows-latest, ubuntu-latest, macos-latest]
 
 jobs:
   build:
