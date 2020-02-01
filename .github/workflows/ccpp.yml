@@ -16,9 +16,11 @@ jobs:
           - name: ubuntu-latest
             vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
             vcpkg: ./vcpkg/vcpkg
+            env: {}
           - name: macos-latest
             vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
             vcpkg: ./vcpkg/vcpkg
+            env: {}
 
     runs-on: ${{ matrix.os.name }}
 
