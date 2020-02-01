@@ -47,14 +47,56 @@ jobs:
 
   release:
     needs: build
-    strategy:
-      matrix:
-        os: [Linux, Windows, macOS]
     runs-on: ubuntu-latest
     steps:
-      - name: Download artifact for ${{ matrix.os }}
+      - name: Download artifact for Linux
         uses: actions/download-artifact@v1
         with:
-          name: vcpkg-export-${{ matrix.os }}
+          name: vcpkg-export-Linux
+      - name: Download artifact for macOS
+        uses: actions/download-artifact@v1
+        with:
+          name: vcpkg-export-macOS
+      - name: Download artifact for Windows
+        uses: actions/download-artifact@v1
+        with:
+          name: vcpkg-export-Windows
       - name: Ls
         run: pwd && ls
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: build-${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+      - name: Upload Windows asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vcpkg-export-Windows/gbemu-build-Windows.zip
+          asset_name: gbemu-build-Windows.zip
+          asset_content_type: application/zip
+      - name: Upload Linux asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vcpkg-export-Linux/gbemu-build-Linux.zip
+          asset_name: gbemu-build-Linux.zip
+          asset_content_type: application/zip
+      - name: Upload macOS asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vcpkg-export-macOS/gbemu-build-macOS.zip
+          asset_name: gbemu-build-macOS.zip
+          asset_content_type: application/zip
