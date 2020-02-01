@@ -9,7 +9,7 @@ jobs:
         # os: [windows-latest, ubuntu-latest, macos-latest]
         os:
           - name: windows-latest
-            vcpkg-bootstrap: .\bootstrap-vcpkg.bat
+            vcpkg-bootstrap: .\vcpkg\bootstrap-vcpkg.bat
           - name: ubuntu-latest
             vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
           - name: macos-latest
