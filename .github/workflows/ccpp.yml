@@ -6,10 +6,18 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+        # os: [windows-latest, ubuntu-latest, macos-latest]
+        os:
+          - name: windows-latest
+            vcpkg-bootstrap: .\bootstrap-vcpkg.bat
+          - name: ubuntu-latest
+            vcpkg-bootstrap: ./bootstrap-vcpkg.sh
+          - name: macos-latest
+            vcpkg-bootstrap: .\bootstrap-vcpkg.sh
+
+    runs-on: ${{ matrix.os.name }}
 
     steps:
       - uses: actions/checkout@v2
-      - name: configure
-        run: echo ${{ matrix.os }}
+      - name: Install vcpkg
+        run: git clone https://github.com/microsoft/vcpkg.git && cd vcpkg && ${{ matrix.os.vcpkg-bootstrap }}
