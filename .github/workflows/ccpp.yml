@@ -11,13 +11,15 @@ jobs:
           - name: windows-latest
             vcpkg-bootstrap: .\bootstrap-vcpkg.bat
           - name: ubuntu-latest
-            vcpkg-bootstrap: ./bootstrap-vcpkg.sh
+            vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
           - name: macos-latest
-            vcpkg-bootstrap: .\bootstrap-vcpkg.sh
+            vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
 
     runs-on: ${{ matrix.os.name }}
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install vcpkg
-        run: git clone https://github.com/microsoft/vcpkg.git && cd vcpkg && ${{ matrix.os.vcpkg-bootstrap }}
+      - name: Clone vcpkg
+        run: git clone https://github.com/microsoft/vcpkg.git
+      - name: Bootstrap vcpkg
+        run: ${{ matrix.os.vcpkg-bootstrap }}
