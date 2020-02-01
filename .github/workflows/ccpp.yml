@@ -34,10 +34,10 @@ jobs:
       - name: Bootstrap vcpkg
         run: ${{ matrix.os.vcpkg-bootstrap }}
       - name: Install dependencies
-        run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite glew fmt range-v3
+        run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
         env: ${{ matrix.os.env }}
       - name: Export vcpkg
-        run: ${{ matrix.os.vcpkg }} export --output=gbemu-build-${{ runner.os }} --zip SDL2 doctest benchmark span-lite glew fmt range-v3
+        run: ${{ matrix.os.vcpkg }} export --output=gbemu-build-${{ runner.os }} --zip SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
         env: ${{ matrix.os.env }}
       - name: Upload artifact for ${{ runner.os }}
         uses: actions/upload-artifact@v1
