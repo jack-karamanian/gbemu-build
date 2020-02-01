@@ -38,6 +38,7 @@ jobs:
         env: ${{ matrix.os.env }}
       - name: Export vcpkg
         run: ${{ matrix.os.vcpkg }} export --output=gbemu-build-${{ runner.os }} --zip SDL2 doctest benchmark span-lite glew fmt range-v3
+        env: ${{ matrix.os.env }}
   release:
     needs: build
     strategy:
