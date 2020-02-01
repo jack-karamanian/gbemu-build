@@ -2,11 +2,11 @@ name: C/C++ CI
 
 on: [push]
 
-matrix:
-  os: [windows-latest, ubuntu-latest, macos-latest]
-
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
     runs-on: ubuntu-latest
 
     steps:
