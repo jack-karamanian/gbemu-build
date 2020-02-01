@@ -10,10 +10,11 @@ jobs:
         os:
           - name: windows-latest
             vcpkg-bootstrap: .\vcpkg\bootstrap-vcpkg.bat
+            vcpkg: .\vcpkg\vcpkg.exe
           - name: ubuntu-latest
-            vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
+            vcpkg: ./vcpkg/vcpkg
           - name: macos-latest
-            vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
+            vcpkg: ./vcpkg/vcpkg
 
     runs-on: ${{ matrix.os.name }}
 
@@ -23,3 +24,5 @@ jobs:
         run: git clone https://github.com/microsoft/vcpkg.git
       - name: Bootstrap vcpkg
         run: ${{ matrix.os.vcpkg-bootstrap }}
+      - name: Install dependencies
+        run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite glew fmt range-v3
