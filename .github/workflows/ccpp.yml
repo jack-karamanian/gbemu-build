@@ -39,14 +39,22 @@ jobs:
       - name: Export vcpkg
         run: ${{ matrix.os.vcpkg }} export --output=gbemu-build-${{ runner.os }} --zip SDL2 doctest benchmark span-lite glew fmt range-v3
         env: ${{ matrix.os.env }}
+      - name: Upload artifact for ${{ runner.os }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: vcpkg-export-${{ runner.os }}
+          path: ./vcpkg/gbemu-build-${{ runner.os }}.zip
+
   release:
     needs: build
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-
+        os: [Linux, Windows, macOS]
+    runs-on: ubuntu-latest
     steps:
-      - name: Test
-        run: ls
-        shell: bash
+      - name: Download artifact for ${{ matrix.os }}
+        uses: actions/download-artifact@v1
+        with:
+          name: vcpkg-export-${{ matrix.os }}
+      - name: Ls
+        run: pwd && ls
