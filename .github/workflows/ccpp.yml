@@ -11,6 +11,8 @@ jobs:
           - name: windows-latest
             vcpkg-bootstrap: .\vcpkg\bootstrap-vcpkg.bat
             vcpkg: .\vcpkg\vcpkg.exe
+            env:
+              VCPKG_DEFAULT_TRIPLET: x64-windows-static
           - name: ubuntu-latest
             vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
             vcpkg: ./vcpkg/vcpkg
@@ -23,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Ubuntu packages
-        run: sudo apt update && sudo apt install libgl1-mesa-dev
+        run: sudo apt update && sudo apt install libgl1-mesa-dev libasound2-dev
         if: matrix.os.name == 'ubuntu-latest'
       - name: Clone vcpkg
         run: git clone https://github.com/microsoft/vcpkg.git
@@ -31,3 +33,4 @@ jobs:
         run: ${{ matrix.os.vcpkg-bootstrap }}
       - name: Install dependencies
         run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite glew fmt range-v3
+        env: ${{ matrix.os.env }}
