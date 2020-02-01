@@ -12,8 +12,10 @@ jobs:
             vcpkg-bootstrap: .\vcpkg\bootstrap-vcpkg.bat
             vcpkg: .\vcpkg\vcpkg.exe
           - name: ubuntu-latest
+            vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
             vcpkg: ./vcpkg/vcpkg
           - name: macos-latest
+            vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
             vcpkg: ./vcpkg/vcpkg
 
     runs-on: ${{ matrix.os.name }}
