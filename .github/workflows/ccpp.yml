@@ -37,13 +37,13 @@ jobs:
         run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
         env: ${{ matrix.os.env }}
       - name: Export vcpkg
-        run: ${{ matrix.os.vcpkg }} export --output=gbemu-build-${{ runner.os }} --zip SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
+        run: ${{ matrix.os.vcpkg }} export --output=vcpkg --zip SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
         env: ${{ matrix.os.env }}
       - name: Upload artifact for ${{ runner.os }}
         uses: actions/upload-artifact@v1
         with:
           name: vcpkg-export-${{ runner.os }}
-          path: ./vcpkg/gbemu-build-${{ runner.os }}.zip
+          path: ./vcpkg/vcpkg.zip
 
   release:
     needs: build
@@ -79,7 +79,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vcpkg-export-Windows/gbemu-build-Windows.zip
+          asset_path: ./vcpkg-export-Windows/vcpkg.zip
           asset_name: gbemu-build-Windows.zip
           asset_content_type: application/zip
       - name: Upload Linux asset
@@ -88,7 +88,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vcpkg-export-Linux/gbemu-build-Linux.zip
+          asset_path: ./vcpkg-export-Linux/vcpkg.zip
           asset_name: gbemu-build-Linux.zip
           asset_content_type: application/zip
       - name: Upload macOS asset
@@ -97,6 +97,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vcpkg-export-macOS/gbemu-build-macOS.zip
+          asset_path: ./vcpkg-export-macOS/vcpkg.zip
           asset_name: gbemu-build-macOS.zip
           asset_content_type: application/zip
