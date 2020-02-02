@@ -34,10 +34,10 @@ jobs:
       - name: Bootstrap vcpkg
         run: ${{ matrix.os.vcpkg-bootstrap }}
       - name: Install dependencies
-        run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
+        run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite fmt range-v3 capstone[arm] glad
         env: ${{ matrix.os.env }}
       - name: Export vcpkg
-        run: ${{ matrix.os.vcpkg }} export --output=vcpkg --zip SDL2 doctest benchmark span-lite glew fmt range-v3 capstone[arm]
+        run: ${{ matrix.os.vcpkg }} export --output=vcpkg --zip SDL2 doctest benchmark span-lite fmt range-v3 capstone[arm] glad
         env: ${{ matrix.os.env }}
       - name: Upload artifact for ${{ runner.os }}
         uses: actions/upload-artifact@v1
