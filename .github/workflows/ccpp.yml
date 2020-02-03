@@ -33,9 +33,8 @@ jobs:
         run: git clone https://github.com/microsoft/vcpkg.git
       - name: Patch vcpkg
         run: |
-          git config --global core.autocrlf true
           cd ./vcpkg
-          git apply ../vcpkg.patch
+          git apply --whitespace=fix ../vcpkg.patch
       - name: Bootstrap vcpkg
         run: ${{ matrix.os.vcpkg-bootstrap }}
       - name: Install dependencies
