@@ -1,0 +1,34 @@
+diff --git a/ports/benchmark/portfile.cmake b/ports/benchmark/portfile.cmake
+index 76cdfb437..3d014dcd2 100644
+--- a/ports/benchmark/portfile.cmake
++++ b/ports/benchmark/portfile.cmake
+@@ -12,6 +12,8 @@ vcpkg_from_github(
+     REF v1.5.0
+     SHA512 a0df9aa3d03f676e302c76d83b436de36eea0a8517ab50a8f5a11c74ccc68a1f5128fa02474901002d8e6b5a4d290ef0272a798ff4670eab3e2d78dc86bb6cd3
+     HEAD_REF master
++    PATCHES
++        remove-rt.patch
+ )
+ 
+ vcpkg_configure_cmake(
+diff --git a/ports/benchmark/remove-rt.patch b/ports/benchmark/remove-rt.patch
+new file mode 100644
+index 000000000..d3a72e526
+--- /dev/null
++++ b/ports/benchmark/remove-rt.patch
+@@ -0,0 +1,15 @@
++diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
++index 81c902c..a240f1a 100644
++--- a/src/CMakeLists.txt
+++++ b/src/CMakeLists.txt
++@@ -31,10 +31,6 @@ target_include_directories(benchmark PUBLIC
++ 
++ # Link threads.
++ target_link_libraries(benchmark  ${BENCHMARK_CXX_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
++-find_library(LIBRT rt)
++-if(LIBRT)
++-  target_link_libraries(benchmark ${LIBRT})
++-endif()
++ 
++ if(CMAKE_BUILD_TYPE)
++   string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_UPPER)

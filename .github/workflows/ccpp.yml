@@ -33,6 +33,10 @@ jobs:
         run: git clone https://github.com/microsoft/vcpkg.git
       - name: Bootstrap vcpkg
         run: ${{ matrix.os.vcpkg-bootstrap }}
+      - name: Patch vcpkg
+        run: |
+          cd ./vcpkg
+          git apply ../vcpkg.patch
       - name: Install dependencies
         run: ${{ matrix.os.vcpkg }} install SDL2 doctest benchmark span-lite fmt range-v3 capstone[arm] glad
         env: ${{ matrix.os.env }}
