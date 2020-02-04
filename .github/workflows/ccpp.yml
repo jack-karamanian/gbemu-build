@@ -25,6 +25,8 @@ jobs:
     runs-on: ${{ matrix.os.name }}
 
     steps:
+      - run: git config --global core.autocrlf true
+        if: matrix.os.name == 'windows-latest'
       - uses: actions/checkout@v2
       - name: Install Ubuntu packages
         run: sudo apt update && sudo apt install libgl1-mesa-dev libasound2-dev
