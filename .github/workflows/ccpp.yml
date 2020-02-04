@@ -25,8 +25,6 @@ jobs:
     runs-on: ${{ matrix.os.name }}
 
     steps:
-      - run: git config --global core.autocrlf true
-        if: matrix.os.name == 'windows-latest'
       - uses: actions/checkout@v2
       - name: Install Ubuntu packages
         run: sudo apt update && sudo apt install libgl1-mesa-dev libasound2-dev
@@ -36,7 +34,8 @@ jobs:
       - name: Patch vcpkg
         run: |
           cd ./vcpkg
-          git apply --whitespace=fix ../vcpkg.patch
+          patch -p1 < ../vcpkg.patch
+        shell: bash
       - name: Bootstrap vcpkg
         run: ${{ matrix.os.vcpkg-bootstrap }}
       - name: Install dependencies
