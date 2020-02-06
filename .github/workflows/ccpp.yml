@@ -12,7 +12,7 @@ jobs:
             vcpkg-bootstrap: .\vcpkg\bootstrap-vcpkg.bat
             vcpkg: .\vcpkg\vcpkg.exe
             env:
-              VCPKG_DEFAULT_TRIPLET: x64-windows
+              VCPKG_DEFAULT_TRIPLET: x64-windows-static
           - name: ubuntu-latest
             vcpkg-bootstrap: ./vcpkg/bootstrap-vcpkg.sh
             vcpkg: ./vcpkg/vcpkg
